@@ -36,7 +36,7 @@ const bfsSearch = (destination) => {
 };
 
 app.get('/:dest', (req, res) => {
-  const dest = req.params.dest;
+  const dest = req.params.dest.toUpperCase();
   let route;
   try {
     route = bfsSearch(dest);
