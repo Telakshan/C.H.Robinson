@@ -21,6 +21,7 @@ const bfsSearch = (destination) => {
     }
 
     if (curr.value === destination) {
+      if (destination === "SLV") route.pop();
       route.push(curr.value);
       return route;
     }
@@ -31,26 +32,28 @@ const bfsSearch = (destination) => {
     if (curr.right !== null || curr.left !== null) {
       route.push(curr.value);
     }
-
   }
 };
 
-app.get('/:dest', (req, res) => {
+app.get("/:dest", (req, res) => {
   const dest = req.params.dest.toUpperCase();
   let route;
   try {
     route = bfsSearch(dest);
-    if(route.length == 0) res.json({error: `${dest} is not an appropriate input`})
+    if (route.length == 0)
+      return res.json({ error: `${dest} is not an appropriate input` });
   } catch (error) {
-    res.json({error: `${dest} is not an appropriate input`});
+    return res.json({ error: `${dest} is not an appropriate input` });
   }
-  return res.json({destination: dest, list: route});
+  return res.status(200).json({ destination: dest, list: route });
 });
 
-app.use((req, res, next) => {
-  res.json({error: 'You must include destination at the end of the url, for example: /PAN'})
-})
-
+app.get("/", (req, res) => {
+  return res.json({
+    error:
+      "You must include destination at the end of the url, for example: /PAN",
+  });
+});
 
 app.listen(PORT, () => {
   console.log("Listening on " + PORT + "...");
