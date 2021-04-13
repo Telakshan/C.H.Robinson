@@ -21,7 +21,6 @@ const bfsSearch = (destination) => {
     }
 
     if (curr.value === destination) {
-      if (destination === "SLV") route.pop();
       route.push(curr.value);
       return route;
     }
